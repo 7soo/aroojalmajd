@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1458,6 +1458,40 @@
             .vm-grid { grid-template-columns: 1fr; }
             .vm-card.featured-vm { border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); min-height: 200px; }
         }
+
+        /* ══════════════════════════════
+           LANGUAGE SWITCHER
+        ══════════════════════════════ */
+        .lang-switcher {
+            display: flex; align-items: center;
+            border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+        }
+        .lang-btn {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 13px; background: transparent;
+            color: var(--text-muted); font-family: 'Cairo', sans-serif;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            border: none; transition: all 0.3s;
+        }
+        .lang-btn .flag { font-size: 0.95rem; }
+        .lang-btn.active { background: var(--gold-dim); color: var(--white); }
+        .lang-btn:hover { color: var(--white); background: var(--gold-dim); }
+        .lang-divider { width: 1px; height: 26px; background: var(--border); }
+
+        html[dir="ltr"] { direction: ltr; }
+        html[dir="ltr"] header { direction: ltr; }
+        html[dir="ltr"] .hero, html[dir="ltr"] .section,
+        html[dir="ltr"] .stats-bar, html[dir="ltr"] footer { direction: ltr; text-align: left; }
+        html[dir="ltr"] .section-header, html[dir="ltr"] .hero { text-align: center; }
+        html[dir="ltr"] .spec-content { direction: ltr; }
+
+        @media (max-width: 640px) {
+            .lang-btn .lang-label { display: none; }
+        }
+
+        .srv-more { display:inline-block; margin-top:16px; color:var(--silver); font-size:0.82rem; font-weight:700; letter-spacing:0.5px; transition:all 0.3s; }
+        .service-card:hover .srv-more { letter-spacing:2px; }
+        a.service-card { color:inherit; }
     </style>
 </head>
 <body>
@@ -1474,7 +1508,7 @@
     <a href="#" class="logo">
         <img src="data:image/png;base64,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" alt="عروج المجد العقارية" class="logo-img">
         <div class="logo-text">
-            <span class="logo-main">عروج <span>المجد</span> العقارية</span>
+            <span class="logo-main" id="t-logo-name">عروج <span style="color:var(--silver)">المجد</span> العقارية</span>
             <span class="logo-sub">AROOJ AL-MAJD REAL ESTATE</span>
         </div>
     </a>
@@ -1482,99 +1516,111 @@
     <!-- Nav CENTER -->
     <nav>
         <ul>
-            <li><a href="#">الرئيسية</a></li>
-            <li><a href="#services">خدماتنا</a></li>
-            <li><a href="#about">من نحن</a></li>
-            <li><a href="contact.html">تواصل معنا</a></li>
+            <li><a href="#"><span id="t-nav-home">الرئيسية</span></a></li>
+            <li><a href="#services"><span id="t-nav-services">خدماتنا</span></a></li>
+            <li><a href="#about"><span id="t-nav-about">من نحن</span></a></li>
+            <li><a href="Contact.html"><span id="t-nav-contact">تواصل معنا</span></a></li>
         </ul>
     </nav>
 
     <!-- Actions LEFT -->
     <div class="header-actions">
-        <a href="contact.html" class="header-contact-btn">
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="btnAr" onclick="setLang('ar')">
+                <span class="flag">🇸🇦</span>
+                <span class="lang-label">AR</span>
+            </button>
+            <div class="lang-divider"></div>
+            <button class="lang-btn" id="btnEn" onclick="setLang('en')">
+                <span class="flag">🇬🇧</span>
+                <span class="lang-label">EN</span>
+            </button>
+        </div>
+        <a href="Contact.html" class="header-contact-btn" data-ar="تواصل معنا" data-en="Contact Us">
             <i class="fas fa-envelope" style="font-size:0.85rem"></i>
-            تواصل معنا
+            <span id="t-nav-contact-btn">تواصل معنا</span>
         </a>
     </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">شريككم العقاري الموثوق في المملكة</div>
-    <h1>
-        عروج المجد
-        <span class="gold-text">العقارية</span>
-    </h1>
+    <div class="hero-badge" id="t-hero-badge">شريككم العقاري الموثوق في المملكة</div>
+    <h1 id="t-hero-h1">عروج المجد<br><span class="gold-text">العقارية</span></h1>
     <div class="hero-divider"></div>
-    <p>ثقتكم أساس نجاحنا — نقدّم حلولاً متكاملة في البيع والشراء والتأجير والتطوير العقاري برؤية قائمة على الجودة والاحترافية</p>
+    <p id="t-hero-p">ثقتكم أساس نجاحنا — نقدّم حلولاً متكاملة في البيع والشراء والتأجير والتطوير العقاري برؤية قائمة على الجودة والاحترافية</p>
     <div class="hero-cta">
         <a href="https://wa.me/966545199094" class="btn-primary" target="_blank">
             <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#0d1b2a"/></svg>
-            تواصل معنا الآن
+            <span id="t-hero-cta-wa">تواصل معنا الآن</span>
         </a>
         <a href="#services" class="btn-outline">
             <i class="fas fa-arrow-down"></i>
-            استكشف خدماتنا
+            <span id="t-hero-cta-ex">استكشف خدماتنا</span>
         </a>
     </div>
     <div class="scroll-hint">
         <div class="mouse"></div>
-        <span>تمرير للأسفل</span>
+        <span id="t-scroll-hint">تمرير للأسفل</span>
     </div>
 </section>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
     <div class="stat-item">
-        <div class="stat-number">+١٠٠</div>
-        <div class="stat-label">صفقة ناجحة</div>
+        <div class="stat-number" id="t-stat1-num">+١٠٠</div>
+        <div class="stat-label" id="t-stat1-label">صفقة ناجحة</div>
     </div>
     <div class="stat-item">
-        <div class="stat-number">+٥</div>
-        <div class="stat-label">سنوات خبرة</div>
+        <div class="stat-number" id="t-stat2-num">+٥</div>
+        <div class="stat-label" id="t-stat2-label">سنوات خبرة</div>
     </div>
     <div class="stat-item">
-        <div class="stat-number">٤</div>
-        <div class="stat-label">قطاعات عقارية</div>
+        <div class="stat-number" id="t-stat3-num">٤</div>
+        <div class="stat-label" id="t-stat3-label">قطاعات عقارية</div>
     </div>
     <div class="stat-item">
-        <div class="stat-number">٢٤/٧</div>
-        <div class="stat-label">خدمة متواصلة</div>
+        <div class="stat-number" id="t-stat4-num">٢٤/٧</div>
+        <div class="stat-label" id="t-stat4-label">خدمة متواصلة</div>
     </div>
 </div>
 
 <!-- SERVICES -->
 <section class="section" id="services">
     <div class="section-header">
-        <span class="section-tag">— ما نقدّمه —</span>
-        <h2>خدماتنا العقارية</h2>
-        <p>نوفّر لك مجموعة متكاملة من الحلول العقارية تلبّي جميع احتياجاتك بكفاءة وأمانة</p>
+        <span class="section-tag" id="t-sec-services-tag">— ما نقدّمه —</span>
+        <h2 id="t-sec-services-h2">خدماتنا العقارية</h2>
+        <p id="t-sec-services-p">نوفّر لك مجموعة متكاملة من الحلول العقارية تلبّي جميع احتياجاتك بكفاءة وأمانة</p>
     </div>
     <div class="services-grid">
-        <div class="service-card">
+        <a class="service-card" href="service-buy-sell.html" style="text-decoration:none;display:block">
             <div class="service-num">01</div>
             <div class="service-icon"><i class="fas fa-handshake"></i></div>
-            <h3>البيع والشراء</h3>
-            <p>نساعدك في إتمام صفقات البيع والشراء بأفضل الشروط والأسعار العادلة وفق السوق العقاري الراهن</p>
-        </div>
-        <div class="service-card">
+            <h3 id="t-srv1-h3">البيع والشراء</h3>
+            <p id="t-srv1-p">نساعدك في إتمام صفقات البيع والشراء بأفضل الشروط والأسعار العادلة وفق السوق العقاري الراهن</p>
+            <span class="srv-more" id="t-srv-more1">اعرف المزيد ←</span>
+        </a>
+        <a class="service-card" href="service-leasing.html" style="text-decoration:none;display:block">
             <div class="service-num">02</div>
             <div class="service-icon"><i class="fas fa-key"></i></div>
-            <h3>التأجير والاستئجار</h3>
-            <p>إدارة عمليات التأجير للعقارات السكنية والتجارية بعقود واضحة تحمي حقوق جميع الأطراف</p>
-        </div>
-        <div class="service-card">
+            <h3 id="t-srv2-h3">التأجير والاستئجار</h3>
+            <p id="t-srv2-p">إدارة عمليات التأجير للعقارات السكنية والتجارية بعقود واضحة تحمي حقوق جميع الأطراف</p>
+            <span class="srv-more" id="t-srv-more2">اعرف المزيد ←</span>
+        </a>
+        <a class="service-card" href="service-development.html" style="text-decoration:none;display:block">
             <div class="service-num">03</div>
             <div class="service-icon"><i class="fas fa-building"></i></div>
-            <h3>التطوير العقاري</h3>
-            <p>خدمات التطوير والاستثمار العقاري مع دراسات جدوى شاملة لمشاريعك العقارية المستقبلية</p>
-        </div>
-        <div class="service-card">
+            <h3 id="t-srv3-h3">التطوير العقاري</h3>
+            <p id="t-srv3-p">خدمات التطوير والاستثمار العقاري مع دراسات جدوى شاملة لمشاريعك العقارية المستقبلية</p>
+            <span class="srv-more" id="t-srv-more3">اعرف المزيد ←</span>
+        </a>
+        <a class="service-card" href="service-contracts.html" style="text-decoration:none;display:block">
             <div class="service-num">04</div>
             <div class="service-icon"><i class="fas fa-file-contract"></i></div>
-            <h3>إدارة العقود</h3>
-            <p>صياغة ومتابعة عقود الإيجار والبيع والشراء وفق الأنظمة واللوائح السعودية المعتمدة</p>
-        </div>
+            <h3 id="t-srv4-h3">إدارة العقود</h3>
+            <p id="t-srv4-p">صياغة ومتابعة عقود الإيجار والبيع والشراء وفق الأنظمة واللوائح السعودية المعتمدة</p>
+            <span class="srv-more" id="t-srv-more4">اعرف المزيد ←</span>
+        </a>
     </div>
 </section>
 
@@ -1587,9 +1633,9 @@
             <div class="vm-icon">
                 <i class="fas fa-eye"></i>
             </div>
-            <h3>رؤيتنـــا</h3>
+            <h3 id="t-vm-vision-h3">رؤيتنـــا</h3>
             <p class="vm-en">Our Vision</p>
-            <p class="vm-text">نسعى إلى تطوير القطاع العقاري بما يتوافق مع مستهدفات رؤية السعودية 2030، من خلال تقديم خدمات مبتكرة تقوم على الشفافية والتخطيط المدروس والجودة العالية.</p>
+            <p class="vm-text" id="t-vm-vision-p">نسعى إلى تطوير القطاع العقاري بما يتوافق مع مستهدفات رؤية السعودية 2030، من خلال تقديم خدمات مبتكرة تقوم على الشفافية والتخطيط المدروس والجودة العالية.</p>
         </div>
         <div class="vm-card featured-vm">
             <div class="vm-logo-bg">
@@ -1605,9 +1651,9 @@
             <div class="vm-icon">
                 <i class="fas fa-bullseye"></i>
             </div>
-            <h3>مهمتنـــا</h3>
+            <h3 id="t-vm-mission-h3">مهمتنـــا</h3>
             <p class="vm-en">Our Mission</p>
-            <p class="vm-text">تقديم خدمات عقارية متكاملة ترتكز على المصداقية والاحترافية، ودعم العملاء بحلول فعّالة تحقق لهم أفضل قيمة ممكنة في السوق العقاري.</p>
+            <p class="vm-text" id="t-vm-mission-p">تقديم خدمات عقارية متكاملة ترتكز على المصداقية والاحترافية، ودعم العملاء بحلول فعّالة تحقق لهم أفضل قيمة ممكنة في السوق العقاري.</p>
         </div>
     </div>
 </section>
@@ -1615,9 +1661,9 @@
 <!-- PROPERTIES GALLERY -->
 <section class="properties-section" id="properties">
     <div class="section-header">
-        <span class="section-tag">— عقاراتنا —</span>
-        <h2>نماذج من عقارات الدمام</h2>
-        <p>نغطّي أفضل المناطق السكنية والتجارية في الدمام والمنطقة الشرقية</p>
+        <span class="section-tag" id="t-props-tag">— عقاراتنا —</span>
+        <h2 id="t-props-h2">نماذج من عقارات الدمام</h2>
+        <p id="t-props-p">نغطّي أفضل المناطق السكنية والتجارية في الدمام والمنطقة الشرقية</p>
     </div>
     <div class="props-grid">
 
@@ -1629,9 +1675,9 @@
                 loading="lazy"
             >
             <div class="prop-info">
-                <span class="prop-tag">سكني</span>
-                <h3>فلل وعقارات سكنية<br>راقية في الدمام</h3>
-                <p><i class="fas fa-map-marker-alt"></i> الدمام — المنطقة الشرقية</p>
+                <span class="prop-tag" id="t-prop1-tag">سكني</span>
+                <h3 id="t-prop1-h3">فلل وعقارات سكنية<br>راقية في الدمام</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="t-prop1-loc">الدمام — المنطقة الشرقية</span></p>
             </div>
         </div>
 
@@ -1643,9 +1689,9 @@
                 loading="lazy"
             >
             <div class="prop-info">
-                <span class="prop-tag">تجاري</span>
-                <h3>مكاتب ومجمعات تجارية</h3>
-                <p><i class="fas fa-map-marker-alt"></i> حي العزيزية، الدمام</p>
+                <span class="prop-tag" id="t-prop2-tag">تجاري</span>
+                <h3 id="t-prop2-h3">مكاتب ومجمعات تجارية</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="t-prop2-loc">حي العزيزية، الدمام</span></p>
             </div>
         </div>
 
@@ -1657,9 +1703,9 @@
                 loading="lazy"
             >
             <div class="prop-info">
-                <span class="prop-tag">صناعي</span>
-                <h3>مستودعات ومخازن</h3>
-                <p><i class="fas fa-map-marker-alt"></i> المنطقة الصناعية، الدمام</p>
+                <span class="prop-tag" id="t-prop3-tag">صناعي</span>
+                <h3 id="t-prop3-h3">مستودعات ومخازن</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="t-prop3-loc">المنطقة الصناعية، الدمام</span></p>
             </div>
         </div>
 
@@ -1670,37 +1716,37 @@
 <section class="section specialties" id="about">
     <div class="spec-grid">
         <div class="spec-content">
-            <span class="section-tag">— تخصصاتنا —</span>
-            <h2>مجالات عملنا <br><span style="color:var(--gold)">العقارية المتنوعة</span></h2>
-            <p>نفخر بتقديم خدماتنا المتكاملة وحلولنا المبتكرة في قطاع العقارات، حيث تغطي مجالات عملنا نطاقاً واسعاً يلبي احتياجات السوق المتنوعة</p>
+            <span class="section-tag" id="t-spec-tag">— تخصصاتنا —</span>
+            <h2 id="t-spec-h2">مجالات عملنا <br><span style="color:var(--gold)">العقارية المتنوعة</span></h2>
+            <p id="t-spec-p">نفخر بتقديم خدماتنا المتكاملة وحلولنا المبتكرة في قطاع العقارات، حيث تغطي مجالات عملنا نطاقاً واسعاً يلبي احتياجات السوق المتنوعة</p>
             <div class="spec-list">
                 <div class="spec-item">
                     <i class="fas fa-home"></i>
-                    <span>العقارات السكنية — شقق، فلل، بيوت</span>
+                    <span id="t-spec1">العقارات السكنية — شقق، فلل، بيوت</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-store"></i>
-                    <span>العقارات التجارية — محلات، مكاتب، مجمعات</span>
+                    <span id="t-spec2">العقارات التجارية — محلات، مكاتب، مجمعات</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-warehouse"></i>
-                    <span>المستودعات والمخازن الصناعية</span>
+                    <span id="t-spec3">المستودعات والمخازن الصناعية</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-gas-pump"></i>
-                    <span>محطات الوقود والخدمات</span>
+                    <span id="t-spec4">محطات الوقود والخدمات</span>
                 </div>
             </div>
         </div>
         <div class="spec-visual">
             <div class="visual-card main">
                 <i class="fas fa-city visual-big-icon"></i>
-                <h4>خبرة في السوق السعودي</h4>
-                <p>نغطّي المنطقة الشرقية بالكامل بمعرفة دقيقة بالأسعار والمواقع</p>
+                <h4 id="t-visual-h4">خبرة في السوق السعودي</h4>
+                <p id="t-visual-p">نغطّي المنطقة الشرقية بالكامل بمعرفة دقيقة بالأسعار والمواقع</p>
             </div>
             <div class="float-badge">
                 <i class="fas fa-map-marker-alt" style="margin-left:6px;color:var(--navy)"></i>
-                الدمام — المنطقة الشرقية
+                <span id="t-visual-badge">الدمام — المنطقة الشرقية</span>
             </div>
         </div>
     </div>
@@ -1714,29 +1760,29 @@
 
         <!-- Col 1: خدماتنا -->
         <div class="footer-col">
-            <h4>خدماتنا</h4>
+            <h4 id="t-footer-services-h4">خدماتنا</h4>
             <ul>
-                <li><a href="#services">البيع والشراء</a></li>
-                <li><a href="#services">التأجير والاستئجار</a></li>
-                <li><a href="#services">التطوير العقاري</a></li>
-                <li><a href="#services">إدارة العقود</a></li>
+                <li><a href="#services" id="t-footer-srv1">البيع والشراء</a></li>
+                <li><a href="#services" id="t-footer-srv2">التأجير والاستئجار</a></li>
+                <li><a href="#services" id="t-footer-srv3">التطوير العقاري</a></li>
+                <li><a href="#services" id="t-footer-srv4">إدارة العقود</a></li>
             </ul>
         </div>
 
         <!-- Col 2: خريطة الموقع -->
         <div class="footer-col">
-            <h4>خريطة الموقع</h4>
+            <h4 id="t-footer-sitemap-h4">خريطة الموقع</h4>
             <ul>
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#services">خدماتنا</a></li>
-                <li><a href="#about">من نحن</a></li>
-                <li><a href="contact.html">تواصل معنا</a></li>
+                <li><a href="#"><span id="t-nav-home">الرئيسية</span></a></li>
+                <li><a href="#services"><span id="t-nav-services">خدماتنا</span></a></li>
+                <li><a href="#about"><span id="t-nav-about">من نحن</span></a></li>
+                <li><a href="Contact.html"><span id="t-nav-contact">تواصل معنا</span></a></li>
             </ul>
         </div>
 
         <!-- Col 3: تواصل معنا -->
         <div class="footer-col">
-            <h4>تواصل معنا</h4>
+            <h4 id="t-footer-contact-h4">تواصل معنا</h4>
             <ul>
                 <li>
                     <span>
@@ -1776,9 +1822,9 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© ٢٠٢٦ عروج المجد العقارية — جميع الحقوق محفوظة &nbsp;|&nbsp; س.ت: 7052680282</p>
+        <p><span id="t-footer-copy">© ٢٠٢٦ عروج المجد العقارية — جميع الحقوق محفوظة &nbsp;|&nbsp; س.ت: 7052680282</span></p>
         <div class="footer-bottom-links">
-            <span>الدمام، المملكة العربية السعودية</span>
+            <span id="t-footer-city">الدمام، المملكة العربية السعودية</span>
         </div>
     </div>
 </footer>
@@ -1816,5 +1862,203 @@
     }
 </script>
 
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  Full site translation dictionary
+// ═══════════════════════════════════════════════════════
+const TRANSLATIONS = {
+  ar: {
+    // Nav
+    'nav-home':       'الرئيسية',
+    'nav-services':   'خدماتنا',
+    'nav-about':      'من نحن',
+    'nav-contact':    'تواصل معنا',
+    'nav-contact-btn':'تواصل معنا',
+    // Hero
+    'hero-badge':  'شريككم العقاري الموثوق في المملكة',
+    'hero-h1':     'عروج المجد<br><span class="gold-text">العقارية</span>',
+    'hero-p':      'ثقتكم أساس نجاحنا — نقدّم حلولاً متكاملة في البيع والشراء والتأجير والتطوير العقاري برؤية قائمة على الجودة والاحترافية',
+    'hero-cta-wa': 'تواصل معنا الآن',
+    'hero-cta-ex': 'استكشف خدماتنا',
+    'scroll-hint': 'تمرير للأسفل',
+    // Stats
+    'srv-more1':'اعرف المزيد ←','srv-more2':'اعرف المزيد ←','srv-more3':'اعرف المزيد ←','srv-more4':'اعرف المزيد ←',
+    'stat1-num': '+١٠٠',
+    'stat2-num': '+٥',
+    'stat3-num': '٤',
+    'stat4-num': '٢٤/٧',
+    'stat1-label': 'صفقة ناجحة',
+    'stat2-label': 'سنوات خبرة',
+    'stat3-label': 'قطاعات عقارية',
+    'stat4-label': 'خدمة متواصلة',
+    // Services section
+    'sec-services-tag':  '— ما نقدّمه —',
+    'sec-services-h2':   'خدماتنا العقارية',
+    'sec-services-p':    'نوفّر لك مجموعة متكاملة من الحلول العقارية تلبّي جميع احتياجاتك بكفاءة وأمانة',
+    'srv1-h3': 'البيع والشراء',
+    'srv1-p':  'نساعدك في إتمام صفقات البيع والشراء بأفضل الشروط والأسعار العادلة وفق السوق العقاري الراهن',
+    'srv2-h3': 'التأجير والاستئجار',
+    'srv2-p':  'إدارة عمليات التأجير للعقارات السكنية والتجارية بعقود واضحة تحمي حقوق جميع الأطراف',
+    'srv3-h3': 'التطوير العقاري',
+    'srv3-p':  'خدمات التطوير والاستثمار العقاري مع دراسات جدوى شاملة لمشاريعك العقارية المستقبلية',
+    'srv4-h3': 'إدارة العقود',
+    'srv4-p':  'صياغة ومتابعة عقود الإيجار والبيع والشراء وفق الأنظمة واللوائح السعودية المعتمدة',
+    // Vision & Mission
+    'vm-vision-h3':   'رؤيتنـــا',
+    'vm-vision-p':    'نسعى إلى تطوير القطاع العقاري بما يتوافق مع مستهدفات رؤية السعودية 2030، من خلال تقديم خدمات مبتكرة تقوم على الشفافية والتخطيط المدروس والجودة العالية.',
+    'vm-mission-h3':  'مهمتنـــا',
+    'vm-mission-p':   'تقديم خدمات عقارية متكاملة ترتكز على المصداقية والاحترافية، ودعم العملاء بحلول فعّالة تحقق لهم أفضل قيمة ممكنة في السوق العقاري.',
+    // Properties
+    'props-tag': '— عقاراتنا —',
+    'props-h2':  'نماذج من عقارات الدمام',
+    'props-p':   'نغطّي أفضل المناطق السكنية والتجارية في الدمام والمنطقة الشرقية',
+    'prop1-tag': 'سكني',
+    'prop1-h3':  'فلل وعقارات سكنية<br>راقية في الدمام',
+    'prop1-loc': 'الدمام — المنطقة الشرقية',
+    'prop2-tag': 'تجاري',
+    'prop2-h3':  'مكاتب ومجمعات تجارية',
+    'prop2-loc': 'حي العزيزية، الدمام',
+    'prop3-tag': 'صناعي',
+    'prop3-h3':  'مستودعات ومخازن',
+    'prop3-loc': 'المنطقة الصناعية، الدمام',
+    // Specialties
+    'spec-tag': '— تخصصاتنا —',
+    'spec-h2':  'مجالات عملنا <br><span style="color:var(--gold)">العقارية المتنوعة</span>',
+    'spec-p':   'نفخر بتقديم خدماتنا المتكاملة وحلولنا المبتكرة في قطاع العقارات، حيث تغطي مجالات عملنا نطاقاً واسعاً يلبي احتياجات السوق المتنوعة',
+    'spec1': 'العقارات السكنية — شقق، فلل، بيوت',
+    'spec2': 'العقارات التجارية — محلات، مكاتب، مجمعات',
+    'spec3': 'المستودعات والمخازن الصناعية',
+    'spec4': 'محطات الوقود والخدمات',
+    'visual-h4': 'خبرة في السوق السعودي',
+    'visual-p':  'نغطّي المنطقة الشرقية بالكامل بمعرفة دقيقة بالأسعار والمواقع',
+    'visual-badge': 'الدمام — المنطقة الشرقية',
+    // Footer
+    'footer-services-h4':   'خدماتنا',
+    'footer-sitemap-h4':    'خريطة الموقع',
+    'footer-contact-h4':    'تواصل معنا',
+    'footer-srv1': 'البيع والشراء',
+    'footer-srv2': 'التأجير والاستئجار',
+    'footer-srv3': 'التطوير العقاري',
+    'footer-srv4': 'إدارة العقود',
+    'footer-map1': 'الرئيسية',
+    'footer-map2': 'خدماتنا',
+    'footer-map3': 'من نحن',
+    'footer-map4': 'تواصل معنا',
+    'footer-location': 'الدمام — المنطقة الشرقية',
+    'footer-copy': '<span id="t-footer-copy">© ٢٠٢٦ عروج المجد العقارية — جميع الحقوق محفوظة &nbsp;|&nbsp; س.ت: 7052680282</span>',
+    'footer-city': 'الدمام، المملكة العربية السعودية',
+    'logo-name': 'عروج <span style="color:var(--silver)">المجد</span> العقارية',
+  },
+  en: {
+    // Nav
+    'nav-home':       'Home',
+    'nav-services':   'Services',
+    'nav-about':      'About Us',
+    'nav-contact':    'Contact Us',
+    'nav-contact-btn':'Contact Us',
+    // Hero
+    'hero-badge':  'Your Trusted Real Estate Partner in KSA',
+    'hero-h1':     'Arooj Al Majd<br><span class="gold-text">Real Estate</span>',
+    'hero-p':      'Your Trust is the Basis of Our Success — We offer comprehensive solutions in buying, selling, leasing, and property development with a vision based on quality and professionalism.',
+    'hero-cta-wa': 'Contact Us Now',
+    'hero-cta-ex': 'Explore Our Services',
+    'scroll-hint': 'Scroll Down',
+    // Stats
+    'srv-more1':'Learn More →','srv-more2':'Learn More →','srv-more3':'Learn More →','srv-more4':'Learn More →',
+    'stat1-num': '+100',
+    'stat2-num': '+5',
+    'stat3-num': '4',
+    'stat4-num': '24/7',
+    'stat1-label': 'Successful Deals',
+    'stat2-label': 'Years of Experience',
+    'stat3-label': 'Real Estate Sectors',
+    'stat4-label': '24/7 Service',
+    // Services
+    'sec-services-tag':  '— What We Offer —',
+    'sec-services-h2':   'Our Real Estate Services',
+    'sec-services-p':    'We provide a comprehensive set of real estate solutions that meet all your needs with efficiency and integrity.',
+    'srv1-h3': 'Buying & Selling',
+    'srv1-p':  'We help you complete buying and selling transactions with the best terms and fair prices aligned with the current real estate market.',
+    'srv2-h3': 'Leasing & Renting',
+    'srv2-p':  'Managing leasing operations for residential and commercial properties with clear contracts that protect the rights of all parties.',
+    'srv3-h3': 'Property Development',
+    'srv3-p':  'Development and real estate investment services with comprehensive feasibility studies for your future real estate projects.',
+    'srv4-h3': 'Contract Management',
+    'srv4-p':  'Drafting and following up on lease, sale, and purchase contracts in accordance with approved Saudi regulations and laws.',
+    // Vision & Mission
+    'vm-vision-h3':   'Our Vision',
+    'vm-vision-p':    'We aim to develop the real estate sector in line with Saudi Vision 2030 by providing innovative services based on transparency, careful planning, and high quality.',
+    'vm-mission-h3':  'Our Mission',
+    'vm-mission-p':   'To provide comprehensive real estate services rooted in credibility and professionalism, supporting clients with effective solutions that deliver the best possible value in the real estate market.',
+    // Properties
+    'props-tag': '— Our Properties —',
+    'props-h2':  'Dammam Real Estate Portfolio',
+    'props-p':   'We cover the best residential and commercial areas in Dammam and the Eastern Province.',
+    'prop1-tag': 'Residential',
+    'prop1-h3':  'Luxury Villas &<br>Residential Properties in Dammam',
+    'prop1-loc': 'Dammam — Eastern Province',
+    'prop2-tag': 'Commercial',
+    'prop2-h3':  'Offices & Commercial Complexes',
+    'prop2-loc': 'Al Aziziyah District, Dammam',
+    'prop3-tag': 'Industrial',
+    'prop3-h3':  'Warehouses & Storage Facilities',
+    'prop3-loc': 'Industrial Area, Dammam',
+    // Specialties
+    'spec-tag': '— Our Specialties —',
+    'spec-h2':  'Our Diverse <br><span style="color:var(--gold)">Real Estate Fields</span>',
+    'spec-p':   'We take pride in offering integrated services and innovative solutions in the real estate sector, covering a wide range of market needs.',
+    'spec1': 'Residential Properties — Apartments, Villas, Houses',
+    'spec2': 'Commercial Properties — Shops, Offices, Complexes',
+    'spec3': 'Industrial Warehouses & Storage Facilities',
+    'spec4': 'Fuel Stations & Service Properties',
+    'visual-h4': 'Expertise in the Saudi Market',
+    'visual-p':  'We cover the entire Eastern Province with precise knowledge of prices and locations.',
+    'visual-badge': 'Dammam — Eastern Province',
+    // Footer
+    'footer-services-h4':   'Services',
+    'footer-sitemap-h4':    'Site Map',
+    'footer-contact-h4':    'Contact Us',
+    'footer-srv1': 'Buying & Selling',
+    'footer-srv2': 'Leasing & Renting',
+    'footer-srv3': 'Property Development',
+    'footer-srv4': 'Contract Management',
+    'footer-map1': 'Home',
+    'footer-map2': 'Services',
+    'footer-map3': 'About Us',
+    'footer-map4': 'Contact Us',
+    'footer-location': 'Dammam — Eastern Province',
+    'footer-brand-p': 'Your Trusted Real Estate Partner in Saudi Arabia. We offer comprehensive real estate services with the highest standards of integrity and professionalism.',
+    'footer-copy': '© 2026 Arooj Al Majd Real Estate — All Rights Reserved &nbsp;|&nbsp; C.R: 7052680282',
+    'footer-city': 'Dammam, Kingdom of Saudi Arabia',
+    'logo-name': 'Arooj <span style="color:var(--silver)">Al Majd</span> Real Estate',
+  }
+};
+
+function setLang(lang) {
+    const html = document.documentElement;
+    const t = TRANSLATIONS[lang];
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    Object.keys(t).forEach(key => {
+        const el = document.getElementById('t-' + key);
+        if (!el) return;
+        el.innerHTML = t[key];
+    });
+    localStorage.setItem('arooj_lang', lang);
+}
+
+// Restore saved language on every page load
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('arooj_lang') || 'ar';
+    setLang(saved);
+
+    // Header scroll
+    const header = document.getElementById('mainHeader');
+    if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 60));
+});
+</script>
 </body>
 </html>
