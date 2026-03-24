@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا | عروج المجد العقارية — AROOJ AL MAJD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #1A252D;
+            --navy-mid: #22313b;
+            --silver: #B8BBBD;
+            --slate: #72787F;
+            --gold: #B8BBBD;
+            --gold-light: #d0d4d6;
+            --gold-dim: rgba(184,187,189,0.12);
+            --white: #ffffff;
+            --text-muted: rgba(255,255,255,0.5);
+            --border: rgba(184,187,189,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Cairo', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
+
+        /* ── HEADER ── */
+        header {
+            position: sticky; top: 0;
+            z-index: 999;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            height: 72px;
+            background: rgba(13,27,42,0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            gap: 30px;
+        }
+
+        .logo {
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none; line-height: 1;
+        }
+        .logo-icon {
+            width: 40px; height: 40px;
+            border: 1.5px solid var(--gold); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-icon svg { width: 20px; height: 20px; }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-main { font-weight: 700; font-size: 1.05rem; color: var(--white); }
+        .logo-main span { color: var(--gold); }
+        .logo-sub { font-size: 0.56rem; color: var(--gold); letter-spacing: 2px; opacity: 0.75; margin-top: 1px; }
+
+        nav ul { display: flex; list-style: none; gap: 4px; }
+        nav ul li a {
+            text-decoration: none; color: var(--text-muted); font-size: 0.88rem;
+            font-weight: 600; padding: 7px 16px; border-radius: 4px; transition: all 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.active { color: var(--gold); background: var(--gold-dim); }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--text-muted);
+            padding: 8px 18px; border-radius: 4px; border: 1px solid var(--border);
+            text-decoration: none; font-size: 0.85rem; font-weight: 600;
+            transition: all 0.3s;
+        }
+        .back-btn:hover { color: var(--gold); border-color: var(--gold); background: var(--gold-dim); }
+
+        /* ── CONTACT LAYOUT ── */
+        .contact-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* Right: info */
+        .contact-info {
+            background: var(--navy-mid);
+            padding: 70px 7%;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; overflow: hidden;
+            border-left: 1px solid var(--border);
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute; top: -120px; right: -120px;
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(200,169,110,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .contact-info::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(200,169,110,0.03) 1px, transparent 1px),
+                        linear-gradient(45deg, rgba(200,169,110,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .contact-title {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 700; line-height: 1.2;
+            margin-bottom: 50px;
+            position: relative; z-index: 2;
+        }
+
+        .contact-info-items { display: flex; flex-direction: column; gap: 32px; position: relative; z-index: 2; }
+
+        .ci-item { display: flex; align-items: flex-start; gap: 18px; }
+
+        .ci-icon {
+            width: 46px; height: 46px;
+            border: 1px solid var(--border); border-radius: 10px;
+            background: var(--gold-dim);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; color: var(--gold); font-size: 1rem;
+        }
+
+        .ci-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 5px; }
+
+        .ci-value {
+            font-size: 0.95rem; color: var(--white); text-decoration: none;
+            font-weight: 600; transition: color 0.3s; display: block;
+        }
+        .ci-value:hover { color: var(--gold); }
+
+        .contact-divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+        /* Left: form */
+        .contact-form-wrap {
+            background: var(--white);
+            padding: 60px 7%; overflow-y: auto;
+        }
+
+        .form-title {
+            font-size: 1.7rem; font-weight: 700; color: var(--navy);
+            margin-bottom: 32px; text-align: right;
+        }
+
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 7px; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        .form-group label {
+            font-size: 0.85rem; font-weight: 600; color: var(--navy); text-align: right;
+        }
+
+        .req { color: #e53e3e; }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%; padding: 11px 0;
+            border: none; border-bottom: 1.5px solid #ddd;
+            background: transparent; font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem; color: var(--navy); outline: none;
+            transition: border-color 0.3s; text-align: right; direction: rtl;
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus { border-bottom-color: var(--gold); }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #bbb; }
+
+        .form-group textarea { resize: none; }
+
+        .select-wrap { position: relative; }
+        .select-wrap::after {
+            content: '▾'; position: absolute; left: 4px; top: 50%;
+            transform: translateY(-50%); color: #aaa; pointer-events: none; font-size: 0.8rem;
+        }
+
+        .phone-wrap {
+            display: flex; align-items: center;
+            border-bottom: 1.5px solid #ddd; transition: border-color 0.3s;
+        }
+        .phone-wrap:focus-within { border-bottom-color: var(--gold); }
+        .phone-code {
+            font-size: 0.85rem; color: var(--navy); font-weight: 600;
+            padding: 11px 12px 11px 0; white-space: nowrap;
+            border-left: 1px solid #eee; margin-left: 8px;
+        }
+        .phone-wrap input { border: none !important; padding-right: 0; }
+
+        .form-submit {
+            background: var(--navy); color: var(--white);
+            border: none; padding: 14px 40px;
+            font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+            cursor: pointer; border-radius: 4px; transition: all 0.3s;
+            align-self: flex-start; min-width: 150px;
+        }
+        .form-submit:hover { background: var(--gold); color: var(--navy); }
+
+        .form-note { font-size: 0.78rem; color: #999; text-align: right; }
+
+        .form-success {
+            display: none; text-align: center; padding: 60px 20px; color: var(--navy);
+        }
+        .form-success i { font-size: 3.5rem; color: #25D366; display: block; margin-bottom: 16px; }
+        .form-success h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .form-success p { font-size: 0.9rem; color: #666; }
+
+        /* WhatsApp float */
+        .whatsapp-float {
+            position: fixed; bottom: 28px; left: 28px;
+            background: #25D366; color: #fff;
+            width: 56px; height: 56px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; z-index: 998; text-decoration: none;
+            box-shadow: 0 8px 28px rgba(37,211,102,0.4);
+            transition: all 0.3s; animation: floatWA 3s ease-in-out infinite;
+        }
+        @keyframes floatWA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+        .whatsapp-float:hover { transform:scale(1.1); animation:none; }
+
+        @media (max-width: 860px) {
+            .contact-page { grid-template-columns: 1fr; }
+            .contact-info { padding: 50px 6%; min-height: auto; }
+        }
+        @media (max-width: 600px) {
+            header { grid-template-columns: auto auto; }
+            nav { display: none; }
+            .logo-sub { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-form-wrap { padding: 40px 5%; }
+        }
+
+        .logo-img {
+            height: 34px; width: auto; display: block;
+            filter: invert(1) brightness(1.8);
+            transition: filter 0.3s;
+        }
+        .logo:hover .logo-img { filter: invert(1) brightness(1.8) sepia(1) saturate(3) hue-rotate(5deg); }
+    </style>
+</head>
+<body>
+
+<a href="https://wa.me/966545199094" class="whatsapp-float" target="_blank">
+    <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
+</a>
+
+<header>
+    <a href="index.html" class="logo">
+        <img src="data:image/png;base64,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" alt="عروج المجد العقارية" class="logo-img">
+        <div class="logo-text">
+            <span class="logo-main">عروج <span>المجد</span> العقارية</span>
+            <span class="logo-sub">AROOJ AL-MAJD REAL ESTATE</span>
+        </div>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="index.html#services">خدماتنا</a></li>
+            <li><a href="index.html#about">من نحن</a></li>
+            <li><a href="contact.html" class="active">تواصل معنا</a></li>
+        </ul>
+    </nav>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-right"></i>
+        العودة
+    </a>
+</header>
+
+<div class="contact-page">
+
+    <!-- RIGHT: معلومات التواصل -->
+    <div class="contact-info">
+        <h2 class="contact-title">كن على تواصل<br>معنا</h2>
+        <div class="contact-info-items">
+            <div class="ci-item">
+                <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <p class="ci-label">البريد الإلكتروني</p>
+                    <a href="/cdn-cgi/l/email-protection#ceafbca1a1a4afa2a3afa4aa8ea9a3afa7a2e0ada1a3" class="ci-value"><span class="__cf_email__" data-cfemail="1475667b7b7e757879757e70547379757d783a777b79">[email&#160;protected]</span></a>
+                </div>
+            </div>
+            <div class="contact-divider"></div>
+            <div class="ci-item">
+                <div class="ci-icon"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                    <p class="ci-label">اتصل بنا مباشرة</p>
+                    <a href="tel:+966545199094" class="ci-value" dir="ltr" style="letter-spacing:1px">+966 545 199 094</a>
+                </div>
+            </div>
+            <div class="contact-divider"></div>
+            <div class="ci-item">
+                <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <p class="ci-label">الموقع</p>
+                    <p class="ci-value">المملكة العربية السعودية — الدمام</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEFT: الفورم -->
+    <div class="contact-form-wrap">
+        <h3 class="form-title">بتواصلك نسعد</h3>
+        <!--
+            ════════════════════════════════════════
+            خطوات تفعيل الإرسال للإيميل (مجاني):
+            1. اذهب لـ https://formspree.io
+            2. سجّل بإيميلك aroojalmajd@gmail.com
+            3. اضغط "New Form" واكتب اسم له
+            4. انسخ الكود الذي يعطيك إياه (شكله: xpzgkwqr)
+            5. في السطر التالي، استبدل YOUR_FORM_ID بذلك الكود
+            ════════════════════════════════════════
+        -->
+        <form class="contact-form" id="contactForm"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST">
+
+            <!-- حقل مخفي يحدد عنوان الإيميل الذي تصله الرسائل -->
+            <input type="hidden" name="_replyto" value="aroojalmajd@gmail.com">
+            <input type="hidden" name="_subject" value="رسالة جديدة من موقع عروج المجد العقارية">
+            <input type="hidden" name="_language" value="ar">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم الأول <span class="req">*</span></label>
+                    <input type="text" name="الاسم الأول" placeholder="مثال: محمد" required>
+                </div>
+                <div class="form-group">
+                    <label>اسم العائلة <span class="req">*</span></label>
+                    <input type="text" name="اسم العائلة" placeholder="مثال: الأحمد" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الدولة <span class="req">*</span></label>
+                    <div class="select-wrap">
+                        <select name="الدولة" required>
+                            <option value="المملكة العربية السعودية" selected>🇸🇦 المملكة العربية السعودية</option>
+                            <option value="الإمارات">🇦🇪 الإمارات</option>
+                            <option value="الكويت">🇰🇼 الكويت</option>
+                            <option value="قطر">🇶🇦 قطر</option>
+                            <option value="البحرين">🇧🇭 البحرين</option>
+                            <option value="عُمان">🇴🇲 عُمان</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>رقم الجوال <span class="req">*</span></label>
+                    <div class="phone-wrap">
+                        <span class="phone-code">🇸🇦 +966</span>
+                        <input type="tel" name="رقم الجوال" placeholder="5XXXXXXXX" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group full">
+                <label>البريد الإلكتروني <span class="req">*</span></label>
+                <input type="email" name="email" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group full">
+                <label>نوع الرسالة <span class="req">*</span></label>
+                <div class="select-wrap">
+                    <select name="نوع الرسالة" required>
+                        <option value="" disabled selected>اختر نوع الرسالة</option>
+                        <option>استفسار عن عقار</option>
+                        <option>طلب تأجير</option>
+                        <option>طلب بيع / شراء</option>
+                        <option>تطوير عقاري</option>
+                        <option>مقترحات</option>
+                        <option>أخرى</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group full">
+                <label>الرسالة <span class="req">*</span></label>
+                <textarea name="الرسالة" placeholder="اكتب رسالتك هنا..." rows="4" required></textarea>
+            </div>
+            <button type="submit" class="form-submit" id="submitBtn">إرسال</button>
+            <p class="form-note">بإرسال النموذج، فإنك تؤكد موافقتك على سياسة الخصوصية.</p>
+        </form>
+        <div class="form-success" id="formSuccess">
+            <i class="fas fa-check-circle"></i>
+            <h3>تم الإرسال بنجاح!</h3>
+            <p>شكراً لتواصلك معنا. سنرد عليك في أقرب وقت ممكن.</p>
+        </div>
+    </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const form = document.getElementById('contactForm');
+    const btn  = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Show loading state
+        btn.textContent = 'جاري الإرسال...';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+
+        const data = new FormData(form);
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (res.ok) {
+                // Success
+                form.style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+            } else {
+                // Formspree error
+                btn.textContent = 'إرسال';
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                alert('حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو التواصل مباشرة عبر الهاتف.');
+            }
+        } catch (err) {
+            // Network error — fallback: open mailto
+            btn.textContent = 'إر
