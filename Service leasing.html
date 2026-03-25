@@ -116,6 +116,102 @@
             .logo-sub { display:none; }
             .lang-btn .lang-label { display:none; }
         }
+
+        /* ── HAMBURGER MENU ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px; height: 20px;
+            cursor: pointer;
+            background: none; border: none;
+            padding: 0; z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.35s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* Mobile nav drawer */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px; left: 0; right: 0;
+            background: rgba(26,37,45,0.99);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 998;
+            padding: 20px 6%;
+            flex-direction: column;
+            gap: 4px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .mobile-nav.open {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 14px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mobile-nav a:last-child { border-bottom: none; }
+        .mobile-nav a:hover, .mobile-nav a.active {
+            color: var(--silver);
+            background: var(--gold-dim);
+        }
+        .mobile-nav a i { color: var(--silver); width: 18px; text-align: center; font-size: 0.9rem; }
+
+        .mobile-nav-lang {
+            display: flex;
+            gap: 10px;
+            padding: 14px 16px 6px;
+        }
+        .mobile-nav-lang button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .mobile-nav-lang button.active {
+            background: var(--gold-dim);
+            color: var(--white);
+            border-color: var(--silver);
+        }
+
+        @media (max-width: 700px) {
+            header { grid-template-columns: auto 1fr auto !important; }
+            nav { display: none !important; }
+            .header-contact-btn { display: none; }
+            .lang-switcher { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: flex; }
+            .logo-sub { display: none; }
+        }
     </style>
 </head>
 <body id="htmlRoot">
@@ -151,7 +247,24 @@
             <span id="t-nav-contact-btn">تواصل معنا</span>
         </a>
     </div>
+            <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 </header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+    <a href="index.html"><i class="fas fa-home"></i><span id="t-mnav-home">الرئيسية</span></a>
+    <a href="index.html#services"><i class="fas fa-th-large"></i><span id="t-mnav-services">خدماتنا</span></a>
+    <a href="index.html#about"><i class="fas fa-info-circle"></i><span id="t-mnav-about">من نحن</span></a>
+    <a href="Contact.html"><i class="fas fa-envelope"></i><span id="t-mnav-contact">تواصل معنا</span></a>
+    <div class="mobile-nav-lang">
+        <button id="mbtnAr" onclick="setLang('ar'); closeMenu()">🇸🇦 AR</button>
+        <button id="mbtnEn" onclick="setLang('en'); closeMenu()">🇬🇧 EN</button>
+    </div>
+</div>
 
 <!-- HERO -->
 <section class="page-hero">
@@ -286,6 +399,10 @@ function setLang(lang) {
     html.setAttribute('lang', lang);
     html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+    const mbAr = document.getElementById('mbtnAr');
+    const mbEn = document.getElementById('mbtnEn');
+    if (mbAr) mbAr.classList.toggle('active', lang === 'ar');
+    if (mbEn) mbEn.classList.toggle('active', lang === 'en');
     document.getElementById('btnEn').classList.toggle('active', lang === 'en');
     const t = PAGE_T[lang];
     Object.keys(t).forEach(key => {
@@ -300,6 +417,26 @@ window.addEventListener('DOMContentLoaded', () => {
     setLang(saved);
     const header = document.getElementById('mainHeader');
     window.addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 60));
+});
+
+function toggleMenu() {
+    const btn = document.getElementById('hamburgerBtn');
+    const nav = document.getElementById('mobileNav');
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+}
+function closeMenu() {
+    document.getElementById('hamburgerBtn').classList.remove('open');
+    document.getElementById('mobileNav').classList.remove('open');
+}
+// Close on outside click
+document.addEventListener('click', (e) => {
+    const btn = document.getElementById('hamburgerBtn');
+    const nav = document.getElementById('mobileNav');
+    if (btn && nav && !btn.contains(e.target) && !nav.contains(e.target)) {
+        btn.classList.remove('open');
+        nav.classList.remove('open');
+    }
 });
 </script>
 </body>
