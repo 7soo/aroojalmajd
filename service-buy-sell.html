@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البيع والشراء | عروج المجد العقارية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #1A252D; --navy-mid: #22313b;
+            --silver: #B8BBBD; --slate: #72787F;
+            --gold: #B8BBBD; --gold-dim: rgba(184,187,189,0.12);
+            --white: #ffffff; --text-muted: rgba(255,255,255,0.5);
+            --border: rgba(184,187,189,0.2);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Cairo',sans-serif; background:var(--navy); color:var(--white); }
+
+        /* ── HEADER ── */
+        header { position:sticky; top:0; z-index:999; padding:0 5%; display:grid; grid-template-columns:auto 1fr auto; align-items:center; height:72px; background:rgba(26,37,45,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); gap:20px; transition:height 0.3s; }
+        header.scrolled { height:60px; }
+        .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+        .logo-img { height:36px; width:auto; filter:invert(1) brightness(1.8); }
+        .logo-text { display:flex; flex-direction:column; }
+        .logo-main { font-weight:700; font-size:1rem; color:var(--white); }
+        .logo-sub { font-size:0.55rem; color:var(--silver); letter-spacing:2px; opacity:0.7; margin-top:1px; }
+        nav ul { display:flex; list-style:none; gap:4px; }
+        nav ul li a { text-decoration:none; color:var(--text-muted); font-size:0.85rem; font-weight:600; padding:7px 14px; border-radius:4px; transition:all 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color:var(--silver); background:var(--gold-dim); }
+        .header-actions { display:flex; align-items:center; gap:10px; }
+        .lang-switcher { display:flex; align-items:center; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+        .lang-btn { display:flex; align-items:center; gap:5px; padding:7px 12px; background:transparent; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; border:none; transition:all 0.3s; }
+        .lang-btn.active { background:var(--gold-dim); color:var(--white); }
+        .lang-btn:hover { color:var(--white); background:var(--gold-dim); }
+        .lang-divider { width:1px; height:26px; background:var(--border); }
+        .header-contact-btn { display:inline-flex; align-items:center; gap:8px; background:var(--silver); color:var(--navy); padding:9px 18px; border-radius:4px; text-decoration:none; font-weight:700; font-size:0.85rem; transition:all 0.3s; }
+        .header-contact-btn:hover { background:var(--white); }
+
+        /* ── HERO ── */
+        .page-hero {
+            min-height: 55vh;
+            background: linear-gradient(rgba(26,37,45,0.8), rgba(26,37,45,0.9)),
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+            display:flex; flex-direction:column; justify-content:center; align-items:center;
+            text-align:center; padding:100px 8% 60px;
+            position:relative; overflow:hidden;
+        }
+        .page-hero::before {
+            content:''; position:absolute; inset:0;
+            background: linear-gradient(135deg, rgba(184,187,189,0.03) 1px, transparent 1px),
+                        linear-gradient(45deg, rgba(184,187,189,0.03) 1px, transparent 1px);
+            background-size:50px 50px;
+        }
+        .hero-tag { display:inline-block; background:var(--gold-dim); border:1px solid var(--border); color:var(--silver); font-size:0.78rem; letter-spacing:3px; padding:7px 20px; border-radius:50px; margin-bottom:25px; position:relative; z-index:2; }
+        .page-hero h1 { font-size:clamp(2.2rem,5vw,4rem); font-weight:700; color:var(--white); margin-bottom:20px; line-height:1.2; position:relative; z-index:2; }
+        .page-hero h1 span { color:var(--silver); }
+        .hero-divider { width:60px; height:2px; background:linear-gradient(90deg,transparent,var(--silver),transparent); margin:0 auto 25px; position:relative; z-index:2; }
+        .page-hero p { font-size:1rem; color:var(--text-muted); max-width:600px; line-height:1.9; position:relative; z-index:2; }
+        .hero-breadcrumb { position:absolute; bottom:25px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--text-muted); z-index:2; }
+        .hero-breadcrumb a { color:var(--silver); text-decoration:none; }
+        .hero-breadcrumb span { color:var(--border); }
+
+        /* ── SERVICE SECTIONS ── */
+        .svc-section { padding:80px 8%; border-bottom:1px solid var(--border); }
+        .svc-section.alt { background:var(--navy-mid); }
+        .svc-inner { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; max-width:1200px; margin:0 auto; }
+        .svc-inner.svc-icon-section { grid-template-columns:auto 1fr; gap:40px; }
+        .svc-section.alt .svc-inner { direction:ltr; }
+        html[dir="ltr"] .svc-section.alt .svc-inner { direction:rtl; }
+
+        .svc-tag { display:inline-block; color:var(--silver); font-size:0.72rem; letter-spacing:3px; font-weight:600; margin-bottom:12px; }
+        .svc-text h2 { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:var(--white); margin-bottom:18px; line-height:1.3; }
+        .svc-text p { font-size:0.95rem; color:var(--text-muted); line-height:2; }
+        .svc-btn { display:inline-flex; align-items:center; gap:10px; background:var(--silver); color:var(--navy); padding:13px 30px; border-radius:4px; text-decoration:none; font-weight:700; font-size:0.9rem; margin-top:30px; transition:all 0.3s; }
+        .svc-btn:hover { background:var(--white); transform:translateY(-2px); box-shadow:0 10px 30px rgba(184,187,189,0.2); }
+
+        .svc-img-wrap { border-radius:8px; overflow:hidden; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+        .svc-img-wrap::after { content:''; position:absolute; inset:0; border:1px solid var(--border); border-radius:8px; pointer-events:none; }
+        .svc-img-wrap img { width:100%; height:380px; object-fit:cover; display:block; transition:transform 0.6s ease; }
+        .svc-img-wrap:hover img { transform:scale(1.04); }
+
+        .svc-icon-box { width:80px; height:80px; border:1px solid var(--border); border-radius:16px; background:var(--gold-dim); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .svc-icon-box i { font-size:2rem; color:var(--silver); }
+
+        /* ── CTA STRIP ── */
+        .page-cta {
+            padding:80px 8%; text-align:center;
+            background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+            border-top:1px solid var(--border);
+        }
+        .page-cta h2 { font-size:2rem; font-weight:700; margin-bottom:12px; }
+        .page-cta p { color:var(--text-muted); margin-bottom:35px; font-size:0.95rem; }
+        .cta-btns { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+        .btn-primary { display:inline-flex; align-items:center; gap:10px; background:var(--silver); color:var(--navy); padding:14px 32px; border-radius:4px; text-decoration:none; font-weight:700; font-size:0.95rem; transition:all 0.3s; }
+        .btn-primary:hover { background:var(--white); transform:translateY(-2px); }
+        .btn-outline { display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--white); padding:13px 32px; border-radius:4px; border:1px solid var(--border); text-decoration:none; font-weight:600; font-size:0.95rem; transition:all 0.3s; }
+        .btn-outline:hover { border-color:var(--silver); color:var(--silver); }
+
+        /* ── WA ── */
+        .whatsapp-float { position:fixed; bottom:28px; left:28px; background:#25D366; color:#fff; width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; z-index:998; text-decoration:none; box-shadow:0 8px 28px rgba(37,211,102,0.4); animation:floatWA 3s ease-in-out infinite; }
+        @keyframes floatWA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+        .whatsapp-float:hover { transform:scale(1.1); animation:none; }
+
+        html[dir="ltr"] header, html[dir="ltr"] .svc-section { direction:ltr; }
+        html[dir="ltr"] .hero-breadcrumb { flex-direction:row-reverse; }
+
+        @media (max-width:900px) {
+            .svc-inner { grid-template-columns:1fr; gap:40px; }
+            .svc-section.alt .svc-inner { direction:inherit; }
+        }
+        @media (max-width:700px) {
+            header { grid-template-columns:auto auto; }
+            nav { display:none; }
+            .logo-sub { display:none; }
+            .lang-btn .lang-label { display:none; }
+        }
+    </style>
+</head>
+<body id="htmlRoot">
+
+<a href="https://wa.me/966545199094" class="whatsapp-float" target="_blank">
+    <svg width="26" height="26" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
+</a>
+
+<header id="mainHeader">
+    <a href="index.html" class="logo">
+        <img src="data:image/png;base64,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" alt="عروج المجد" class="logo-img">
+        <div class="logo-text">
+            <span class="logo-main" id="t-logo-name">عروج <span style="color:var(--silver)">المجد</span> العقارية</span>
+            <span class="logo-sub">AROOJ AL MAJD REAL ESTATE</span>
+        </div>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="index.html"><span id="t-nav-home">الرئيسية</span></a></li>
+            <li><a href="index.html#services" class="active"><span id="t-nav-services">خدماتنا</span></a></li>
+            <li><a href="index.html#about"><span id="t-nav-about">من نحن</span></a></li>
+            <li><a href="Contact.html"><span id="t-nav-contact">تواصل معنا</span></a></li>
+        </ul>
+    </nav>
+    <div class="header-actions">
+        <div class="lang-switcher">
+            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">🇸🇦 <span class="lang-label">AR</span></button>
+            <div class="lang-divider"></div>
+            <button class="lang-btn" id="btnEn" onclick="setLang('en')">🇬🇧 <span class="lang-label">EN</span></button>
+        </div>
+        <a href="Contact.html" class="header-contact-btn">
+            <i class="fas fa-envelope"></i>
+            <span id="t-nav-contact-btn">تواصل معنا</span>
+        </a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+    <div class="hero-tag" id="t-page-hero-tag">— خدماتنا —</div>
+    <h1 id="t-page-hero-h1">البيع والشراء</h1>
+    <div class="hero-divider"></div>
+    <p id="t-page-hero-p">نساعدك في إتمام صفقات البيع والشراء بأفضل الشروط والأسعار العادلة وفق السوق العقاري الراهن في المملكة العربية السعودية</p>
+    <div class="hero-breadcrumb">
+        <a href="index.html" id="t-page-back">العودة للرئيسية</a>
+        <span>›</span>
+        <span id="t-page-hero-tag2">— خدماتنا —</span>
+    </div>
+</section>
+
+
+<section class="svc-section ">
+    <div class="svc-inner">
+        <div class="svc-text">
+            <span class="svc-tag" id="t-sec-0-tag">— لماذا تختارنا —</span>
+            <h2 id="t-sec-0-h">خبرة واسعة في سوق العقارات</h2>
+            <p id="t-sec-0-p">نمتلك في عروج المجد العقارية خبرة واسعة في سوق العقارات السعودي، مما يمكّننا من تقديم أفضل العروض للبائعين والمشترين على حد سواء. نحن نفهم تفاصيل السوق ونعمل بشفافية تامة لضمان تحقيق أفضل قيمة لعقارك.</p>
+            <a href="Contact.html" class="svc-btn" id="t-page-cta-btn">تواصل معنا الآن</a>
+        </div>
+        <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80" alt="خبرة واسعة في سوق العقارات" loading="lazy">
+        </div>
+    </div>
+</section>
+<section class="svc-section alt">
+    <div class="svc-inner">
+        <div class="svc-text">
+            <span class="svc-tag" id="t-sec-1-tag">— عملية البيع —</span>
+            <h2 id="t-sec-1-h">نبسّط لك عملية بيع عقارك</h2>
+            <p id="t-sec-1-p">من تقييم العقار بدقة، إلى التسويق الاحترافي، وصولاً لإتمام الصفقة وتوثيق العقود — نحن معك في كل خطوة. فريقنا المتخصص يضمن لك أعلى سعر ممكن في أقصر وقت.</p>
+            <a href="Contact.html" class="svc-btn" id="t-page-cta-btn">تواصل معنا الآن</a>
+        </div>
+        <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=900&q=80" alt="نبسّط لك عملية بيع عقارك" loading="lazy">
+        </div>
+    </div>
+</section>
+<section class="svc-section ">
+    <div class="svc-inner">
+        <div class="svc-text">
+            <span class="svc-tag" id="t-sec-2-tag">— عملية الشراء —</span>
+            <h2 id="t-sec-2-h">نجد لك العقار المثالي</h2>
+            <p id="t-sec-2-p">سواء كنت تبحث عن فيلا سكنية، شقة، أو عقار تجاري — فريقنا يبحث لك عن أفضل الخيارات المتاحة في السوق وفق ميزانيتك ومتطلباتك. نوفر لك مقارنات دقيقة ونرشدك لاتخاذ القرار الصحيح.</p>
+            <a href="Contact.html" class="svc-btn" id="t-page-cta-btn">تواصل معنا الآن</a>
+        </div>
+        <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80" alt="نجد لك العقار المثالي" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="page-cta">
+    <h2 id="t-cta-h2">هل أنت مستعد للبدء؟</h2>
+    <p id="t-cta-p">تواصل معنا اليوم ودعنا نساعدك في إيجاد أفضل الحلول العقارية</p>
+    <div class="cta-btns">
+        <a href="Contact.html" class="btn-primary">
+            <i class="fas fa-envelope"></i>
+            <span id="t-page-cta-btn2">تواصل معنا الآن</span>
+        </a>
+        <a href="https://wa.me/966545199094" class="btn-outline" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
+            <span id="t-page-wa-btn">واتساب</span>
+        </a>
+    </div>
+</section>
+
+<script>
+
+const PAGE_T = {
+  ar: {
+    'page-hero-tag': '— خدماتنا —',
+    'page-hero-h1': 'البيع والشراء',
+    'page-hero-p': 'نساعدك في إتمام صفقات البيع والشراء بأفضل الشروط والأسعار العادلة وفق السوق العقاري الراهن في المملكة العربية السعودية',
+    'page-cta-btn': 'تواصل معنا الآن',
+    'page-back': 'العودة للرئيسية',
+        'sec-0-h': 'خبرة واسعة في سوق العقارات',
+    'sec-1-h': 'نبسّط لك عملية بيع عقارك',
+    'sec-2-h': 'نجد لك العقار المثالي',
+        'sec-0-p': 'نمتلك في عروج المجد العقارية خبرة واسعة في سوق العقارات السعودي، مما يمكّننا من تقديم أفضل العروض للبائعين والمشترين على حد سواء. نحن نفهم تفاصيل السوق ونعمل بشفافية تامة لضمان تحقيق أفضل قيمة لعقارك.',
+    'sec-1-p': 'من تقييم العقار بدقة، إلى التسويق الاحترافي، وصولاً لإتمام الصفقة وتوثيق العقود — نحن معك في كل خطوة. فريقنا المتخصص يضمن لك أعلى سعر ممكن في أقصر وقت.',
+    'sec-2-p': 'سواء كنت تبحث عن فيلا سكنية، شقة، أو عقار تجاري — فريقنا يبحث لك عن أفضل الخيارات المتاحة في السوق وفق ميزانيتك ومتطلباتك. نوفر لك مقارنات دقيقة ونرشدك لاتخاذ القرار الصحيح.',
+        'sec-0-tag': '— لماذا تختارنا —' ,
+    'sec-1-tag': '— عملية البيع —' ,
+    'sec-2-tag': '— عملية الشراء —' ,
+  },
+  en: {
+    'page-hero-tag': '— Our Services —',
+    'page-hero-h1': 'Buying & Selling',
+    'page-hero-p': 'We help you complete buying and selling transactions with the best terms and fair prices aligned with the current real estate market in Saudi Arabia.',
+    'page-cta-btn': 'Contact Us Now',
+    'page-back': 'Back to Home',
+        'sec-0-h': 'Extensive Real Estate Market Expertise',
+    'sec-1-h': 'We Simplify Your Property Sale',
+    'sec-2-h': 'We Find Your Perfect Property',
+        'sec-0-p': 'At Arooj Al Majd Real Estate, we possess extensive expertise in the Saudi real estate market, enabling us to offer the best deals for both sellers and buyers. We understand market nuances and work with full transparency to ensure the best value for your property.',
+    'sec-1-p': 'From accurate property valuation, to professional marketing, to completing the deal and documenting contracts — we are with you every step of the way. Our specialized team ensures you get the highest possible price in the shortest time.',
+    'sec-2-p': 'Whether you are looking for a residential villa, apartment, or commercial property — our team searches for the best available options in the market according to your budget and requirements. We provide accurate comparisons and guide you to make the right decision.',
+        'sec-0-tag': '— Why Choose Us —' ,
+    'sec-1-tag': '— Selling Process —' ,
+    'sec-2-tag': '— Buying Process —' ,
+  }
+};
+window.__PAGE_T = PAGE_T;
+
+
+// Add CTA and extra keys
+['ar','en'].forEach(lang => {
+    Object.assign(PAGE_T[lang], {
+        'logo-name': lang==='ar' ? 'عروج <span style="color:var(--silver)">المجد</span> العقارية' : 'Arooj <span style="color:var(--silver)">Al Majd</span> Real Estate',
+        'nav-home': lang==='ar'?'الرئيسية':'Home',
+        'nav-services': lang==='ar'?'خدماتنا':'Services',
+        'nav-about': lang==='ar'?'من نحن':'About Us',
+        'nav-contact': lang==='ar'?'تواصل معنا':'Contact Us',
+        'nav-contact-btn': lang==='ar'?'تواصل معنا':'Contact Us',
+        'page-back': lang==='ar'?'العودة للرئيسية':'Back to Home',
+        'page-hero-tag2': PAGE_T[lang]['page-hero-tag'],
+        'cta-h2': lang==='ar'?'هل أنت مستعد للبدء؟':'Ready to Get Started?',
+        'cta-p': lang==='ar'?'تواصل معنا اليوم ودعنا نساعدك في إيجاد أفضل الحلول العقارية':'Contact us today and let us help you find the best real estate solutions.',
+        'page-cta-btn': lang==='ar'?'تواصل معنا الآن':'Contact Us Now',
+        'page-cta-btn2': lang==='ar'?'تواصل معنا الآن':'Contact Us Now',
+        'page-wa-btn': lang==='ar'?'واتساب':'WhatsApp',
+    });
+});
+
+function setLang(lang) {
+    const html = document.documentElement;
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    const t = PAGE_T[lang];
+    Object.keys(t).forEach(key => {
+        const el = document.getElementById('t-' + key);
+        if (el) el.innerHTML = t[key];
+    });
+    localStorage.setItem('arooj_lang', lang);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('arooj_lang') || 'ar';
+    setLang(saved);
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 60));
+});
+</script>
+</body>
+</html>
